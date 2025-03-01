@@ -22,9 +22,9 @@ Here’s a rundown of the mini-projects currently available in this repository:
 
 | Project Name       | Folder            |
 |--------------------|-------------------|
-| **Analog-Watch** | `analog-clock.html` |
-| **Login-Page** | `login.html` |
-| **Signup-Page** | `signup.html` |
+| **Analog-Watch** | `analog-clock.html/` |
+| **Login-Page** | `login.html/` |
+| **Signup-Page** | `signup.html/` |
 
 *(Note: Replace the placeholders above with actual project details from the repository once you have access to its contents.)*
 
