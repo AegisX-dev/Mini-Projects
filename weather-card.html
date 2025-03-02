@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Weather Box</title>
+  <style>
+    /* Reset default browser styles for consistency */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'monospace', fantasy;
+    }
+
+    /* Styles the outer container */
+    .weather-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    /* Main weather box styling */
+    .weather-box {
+      position: relative;
+      width: 350px;
+      height: 130px;
+      background: linear-gradient(90deg, #2c2c2c, #1f1f1f);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Decorative accent */
+    .weather-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 38%;
+      background: linear-gradient(90deg, #4a00e0, #8e2de2);
+      border-radius: 20px 20px 0 0;
+      transition: height 0.5s ease-in-out, background 0.3s ease;
+    }
+
+    /* Container for weather information */
+    .weather-info {
+      position: relative;
+      z-index: 1;
+      padding: 17px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .place-name {
+      font-size: 20px;
+      font-weight:normal;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .weather-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      margin-top: 5px;
+    }
+
+    .temp {
+      font-weight: normal;
+      color: #ffd700;
+      font-size: 24px;
+      transition: transform 0.2s ease;
+      margin-top: 5px;
+    }
+
+    .weather {
+      opacity: 0.9;
+    }
+
+    .time-info {
+      display: flex;
+      gap: 10px;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+
+    .time {
+      font-weight: normal;
+    }
+
+    .date, .day {
+      color: #d3d3d3;
+    }
+
+    /* Hover effects */
+    .weather-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .weather-box:hover .place-name {
+      color: #ffd700;
+    }
+
+    .weather-box:hover .temp {
+      transform: scale(1.1);
+    }
+
+    .weather-box:hover .weather-accent {
+      height: 35%;
+      background: linear-gradient(90deg, #6a00ff, #a44bff);
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 400px) {
+      .weather-box {
+        width: 300px;
+        height: 100px;
+      }
+
+      .place-name {
+        font-size: 18px;
+      }
+
+      .weather-details {
+        font-size: 14px;
+      }
+
+      .temp {
+        font-size: 20px;
+      }
+
+      .time-info {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-container">
+    <div class="weather-box">
+      <div class="weather-accent"></div>
+      <div class="weather-info">
+        <span class="place-name">Loading...</span>
+        <div class="weather-details">
+          <span class="temp">--°C</span>
+          <span class="weather">Loading...</span>
+        </div>
+        <div class="time-info">
+          <span class="time">--:--</span>
+          <span class="date">-- --- ----</span>
+          <span class="day">---</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class WeatherBox {
+      constructor(apiKey, element) {
+        this.apiKey = apiKey;
+        this.element = element;
+        this.placeName = element.querySelector('.place-name');
+        this.temp = element.querySelector('.temp');
+        this.weather = element.querySelector('.weather');
+        this.time = element.querySelector('.time');
+        this.date = element.querySelector('.date');
+        this.day = element.querySelector('.day');
+      }
+
+      update(data = {}) {
+        this.placeName.textContent = data.city || 'Unknown';
+        this.temp.textContent = data.temp ? `${Math.round(data.temp)}°C` : '--°C';
+        this.weather.textContent = data.condition || 'Unknown';
+        this.updateTime();
+      }
+
+      updateTime() {
+        const now = new Date();
+        this.time.textContent = now.toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        });
+        this.date.textContent = now.toLocaleDateString('en-US', {
+          month: 'short',
+          day: '2-digit',
+          year: 'numeric'
+        });
+        this.day.textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
+      }
+
+      async fetchWeather(city) {
+        try {
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}&units=metric`
+          );
+          if (!response.ok) throw new Error('City not found');
+          
+          const data = await response.json();
+          this.update({
+            city: data.name,
+            temp: data.main.temp,
+            condition: data.weather[0].main
+          });
+        } catch (error) {
+          console.error('Weather fetch error:', error);
+          this.update({ city: 'Error', condition: 'Failed to load' });
+        }
+      }
+
+      init(city = 'New York') {
+        this.fetchWeather(city);
+        this.updateTime();
+        setInterval(() => this.updateTime(), 60000);
+      }
+    }
+
+    // Initialize weather box
+    const apiKey = '81c4a09c6350388f83ee291b6db3542e'; // Replace with your actual API key
+    const weatherBox = new WeatherBox(apiKey, document.querySelector('.weather-box'));
+    weatherBox.init('New York');
+
+    // Example of custom data usage (uncomment to test):
+    // setTimeout(() => {
+    //   weatherBox.update({
+    //     city: 'London',
+    //     temp: 15,
+    //     condition: 'Cloudy'
+    //   });
+    // }, 3000);
+  </script>
+</body>
+</html>
