@@ -22,10 +22,10 @@ Here’s a rundown of the mini-projects currently available in this repository:
 
 | Project Name       | Folder            |
 |--------------------|-------------------|
-| **Analog-Watch** | `analog-clock.html/` |
-| **Login-Page** | `login.html/` |
-| **Signup-Page** | `signup.html/` |
-| **Weather-Card** | '' |
+| **Analog-Watch** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/analog-clock.html` |
+| **Login-Page** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/login.html` |
+| **Signup-Page** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/signup.html` |
+| **Weather-Card** | 'https://github.com/AegisX-dev/Mini-Projects/blob/main/weather-card.html' |
 
 *(Note: Replace the placeholders above with actual project details from the repository once you have access to its contents.)*
 
