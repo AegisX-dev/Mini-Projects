@@ -26,6 +26,7 @@ Here’s a rundown of the mini-projects currently available in this repository:
 | **Login-Page** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/login.html` |
 | **Signup-Page** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/signup.html` |
 | **Weather-Card** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/weather-card.html` |
+| **Blackhole-Loader** | `https://github.com/AegisX-dev/Mini-Projects/blob/main/blackhole-loader.html` |
 
 *(Note: Replace the placeholders above with actual project details from the repository once you have access to its contents.)*
 
