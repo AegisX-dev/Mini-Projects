@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Hole Loader</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #0a0a0a;
+    }
+
+    .black-hole-loader {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0a0a0a;
+    }
+
+    .black-hole-loader__core {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #000;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(255, 255, 255, 0.1);
+      z-index: 2;
+    }
+
+    .black-hole-loader__ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      animation: black-hole-loader__spin 2s infinite ease-in-out;
+    }
+
+    .black-hole-loader__ring1 {
+      border-top-color: #ff00ff;
+      animation-delay: 0s;
+      box-shadow: 0 0 15px #ff00ff;
+    }
+
+    .black-hole-loader__ring2 {
+      border-top-color: #00ffff;
+      animation-delay: -0.5s;
+      transform: scale(0.8);
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    .black-hole-loader__ring3 {
+      border-top-color: #ff9900;
+      animation-delay: -1s;
+      transform: scale(0.6);
+      box-shadow: 0 0 15px #ff9900;
+    }
+
+    .black-hole-loader__particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      animation: black-hole-loader__orbit 3s infinite;
+    }
+
+    .black-hole-loader__particle:nth-child(5) {
+      top: 15px;
+      left: 30px;
+      animation-delay: 0s;
+    }
+
+    .black-hole-loader__particle:nth-child(6) {
+      top: 45px;
+      left: 105px;
+      animation-delay: -0.5s;
+    }
+
+    .black-hole-loader__particle:nth-child(7) {
+      top: 90px;
+      left: 15px;
+      animation-delay: -1s;
+    }
+
+    .black-hole-loader__particle:nth-child(8) {
+      top: 120px;
+      left: 90px;
+      animation-delay: -1.5s;
+    }
+
+    @keyframes black-hole-loader__spin {
+      0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: rotate(180deg) scale(1.1);
+        opacity: 0.7;
+      }
+      100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes black-hole-loader__orbit {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0) translate(75px, 75px); /* Move to center (150px/2, 150px/2) */
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="black-hole-loader">
+    <div class="black-hole-loader__core"></div>
+    <div class="black-hole-loader__ring black-hole-loader__ring1"></div>
+    <div class="black-hole-loader__ring black-hole-loader__ring2"></div>
+    <div class="black-hole-loader__ring black-hole-loader__ring3"></div>
+    <div class="black-hole-loader__particle"></div>
+    <div class="black-hole-loader__particle"></div>
+    <div class="black-hole-loader__particle"></div>
+    <div class="black-hole-loader__particle"></div>
+  </div>
+</body>
+</html>
